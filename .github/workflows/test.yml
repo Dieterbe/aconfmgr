@@ -35,7 +35,7 @@ jobs:
         COVERALLS_PARALLEL: true
         COVERALLS_FLAG_NAME: "${{ matrix.name }}"
         COVERALLS_SERVICE_NAME: github
-        CI_BUILD_NUMBER: ${{ github.run_number }}
+        CI_BUILD_NUMBER: ${{ github.run_id }}
       run: |
         test/ci.sh
   finalize:
@@ -43,4 +43,4 @@ jobs:
     if: always()
     needs: test
     steps:
-    - run: curl "https://coveralls.io/webhook?repo_name=$GITHUB_REPOSITORY&repo_token=${{ secrets.GITHUB_TOKEN }}" -d "payload[build_num]=$GITHUB_RUN_NUMBER&payload[status]=done"
+    - run: curl "https://coveralls.io/webhook?repo_name=$GITHUB_REPOSITORY&repo_token=${{ secrets.GITHUB_TOKEN }}" -d "payload[build_num]=$GITHUB_RUN_ID&payload[status]=done"
